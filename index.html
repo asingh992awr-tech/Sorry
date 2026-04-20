@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>I'm Sorry</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    font-family: Arial;
+    overflow: hidden;
+}
+
+/* floating hearts */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.container {
+    text-align: center;
+    background: rgba(255,255,255,0.15);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    z-index: 1;
+}
+
+h1 {
+    font-size: 60px;
+    color: white;
+}
+
+img {
+    width: 220px;
+    margin: 20px 0;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+button {
+    padding: 12px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 25px;
+    background: #ff4e78;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ff2e63;
+}
+
+#message {
+    color: white;
+    font-size: 18px;
+    margin-top: 10px;
+    min-height: 24px;
+    font-weight: 900;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>I’m Sorry 💔</h1>
+
+    <img id="gif" src="Babu maan jao na.jpeg" alt="sorry">
+
+    <div id="message"></div>
+
+    <br>
+
+    <button onclick="go()">Let’s Talk ❤️</button>
+    <button onclick="wait()">I Need Time</button>
+</div>
+
+<script>
+// paired data (better than separate arrays)
+let data = [
+    {img: "0.jpeg", msg: "I understand… take your time ❤️"},
+    {img: "9.jpeg", msg: "I’ll wait for you… 😔"},
+    {img: "4.jpeg", msg: "Still here… thinking about you 💭"},
+    {img: "6.jpeg", msg: "I won’t give up on us 💔"},
+    {img: "5.jpeg", msg: "Ab Mann Bhi jaa 😘"}
+];
+
+let index = 0;
+
+function go() {
+    sessionStorage.setItem("cameFromIndex", "true");
+    localStorage.setItem("playMusic", "yes");
+    window.location.href = "letter.html";
+}
+
+function wait() {
+    let gif = document.getElementById("gif");
+    let msg = document.getElementById("message");
+
+    // progression first
+    if (index < data.length) {
+        gif.src = data[index].img;
+        msg.innerText = data[index].msg;
+        index++;
+    } 
+    // then random forever
+    else {
+        let r = Math.floor(Math.random() * data.length);
+        gif.src = data[r].img;
+        msg.innerText = data[r].msg;
+    }
+}
+
+/* generate floating hearts */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerText = " ❤️";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+    heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
